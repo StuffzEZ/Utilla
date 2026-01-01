@@ -17,10 +17,15 @@ namespace Utilla.Utils
 
         public static Gamemode GetGamemode(Func<Gamemode, bool> predicate)
         {
-            // Search all gamemodes in reverse order to prioritize modded gamemodes
-            if (GamemodeManager.HasInstance && GamemodeManager.Instance.Gamemodes.LastOrDefault(predicate) is Gamemode gameMode)
-                return gameMode;
-            return null;
+            if (!GamemodeManager.HasInstance) return null;
+        
+            // Return the first gamemode that matches the predicate, ignoring _MOD in IDs
+            return GamemodeManager.Instance.Gamemodes
+                .FirstOrDefault(gamemode => predicate(new Gamemode 
+                { 
+                    ID = gamemode.ID.Replace("_MOD_", "_"), 
+                    Name = gamemode.Name 
+                }));
         }
 
         public static string GetGameModeName(GameModeType gameModeType)
