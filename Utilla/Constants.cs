@@ -13,3 +13,4 @@
         internal const string InfoRepositoryURL = "https://raw.githubusercontent.com/developer9998/Utilla-Info/main";
     }
 }
+
